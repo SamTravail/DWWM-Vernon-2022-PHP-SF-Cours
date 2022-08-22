@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Email;
 
 class PublicController extends AbstractController
 {
@@ -30,11 +30,21 @@ class PublicController extends AbstractController
     #[Route('/contact', name: 'contact')]
     public function contact(): Response
     {
-        $formulaire = $this->creatFormBuilder()
-        ->add('Nom', TextType::class,
+        $formulaire = $this->createFormBuilder()
+            ->add('Nom', TextType::class,
+                ['attr' => ['class' => 'formCss']])
+           ->add('Prenom',TextType::class,
             ['attr' => ['class' => 'formCss']])
-        ->add('Envoyer', SubmitType::class)
-        ->getForm();
+            ->add('Entreprise',TextType::class,
+                ['attr' => ['class' => 'formCss']])
+            ->add('Email',TextType::class,
+                ['attr' => ['class' => 'formCss']])
+            ->add('Tel:',TextType::class,
+                ['attr' => ['class' => 'formCss']])
+            ->add('Message',TextType::class,
+                ['attr' => ['class' => 'formCss']])
+            ->add('Envoyer', SubmitType::class)
+            ->getForm();
 
         return $this->render('public/contact.html.twig', [
             'controller_name' => 'Who am I?',
