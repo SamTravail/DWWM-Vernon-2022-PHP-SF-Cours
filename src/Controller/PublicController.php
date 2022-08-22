@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -32,18 +36,21 @@ class PublicController extends AbstractController
     {
         $formulaire = $this->createFormBuilder()
             ->add('Nom', TextType::class,
-                ['attr' => ['class' => 'formCss']])
+                ['attr' => ['class' => 'formCss', 'placeholder' => 'Nom']])
            ->add('Prenom',TextType::class,
-            ['attr' => ['class' => 'formCss']])
+            ['attr' => ['class' => 'formCss', 'placeholder' => 'Prenom']])
             ->add('Entreprise',TextType::class,
-                ['attr' => ['class' => 'formCss']])
-            ->add('Email',TextType::class,
-                ['attr' => ['class' => 'formCss']])
-            ->add('Tel:',TextType::class,
-                ['attr' => ['class' => 'formCss']])
-            ->add('Message',TextType::class,
-                ['attr' => ['class' => 'formCss']])
+                ['attr' => ['placeholder' => 'Entreprise', 'required' => false]])
+            ->add('Email',EmailType::class,
+                ['attr' => ['class' => 'formCss', 'placeholder' => 'Email']])
+            ->add('Tel:',TelType::class,
+                ['attr' => ['class' => 'formCss', 'placeholder' => 'Tel']])
+            ->add('Message',TextareaType::class,
+                ['attr' => ['class' => 'formCss', 'placeholder' => 'Message']])
             ->add('Envoyer', SubmitType::class)
+            ->add('Annuler', ResetType::class)
+            ->setMethod('post')
+            ->setAction('/')
             ->getForm();
 
         return $this->render('public/contact.html.twig', [
