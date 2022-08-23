@@ -50,4 +50,13 @@ class PublicController extends AbstractController
             'frmContact' => $messageFormulaire->createView()
         ]);
     }
+
+    #[Route('/messages', name: 'messages')]
+    public function messages(Request $request, EntityManagerInterface $entityManager)
+    {
+        $resultat = $entityManager->getRepository(Messages::class)->findAll();
+
+       return $this->render('public/message.html.twig', [
+            'messages' => $resultat]);
+    }
 }
