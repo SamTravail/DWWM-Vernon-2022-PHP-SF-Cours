@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Form\ContactFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,9 +35,9 @@ class PublicController extends AbstractController
     }
 
     #[Route('/contact', name: 'contact')]
-    public function contact(Request $request)
+    public function contact(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $formulaire = $this->createFormBuilder()
+        /*$formulaire = $this->createFormBuilder()
             ->add('Nom', TextType::class,
                 ['attr' => ['class' => 'formCss']])
             ->add('Prenom', TextType::class)
@@ -48,19 +50,27 @@ class PublicController extends AbstractController
             ->add('Message', TextareaType::class)
             ->add('Envoyer', SubmitType::class)
             ->add('Annuler', ResetType::class)
-            // ->setMethod('post')
-            // ->setAction('/')
+            ->setMethod('post')
+            ->setAction('/')
             ->getForm();
 
         $formulaire->handleRequest($request);
 
         if ($formulaire->isSubmitted() && $formulaire->isValid()) {
-            dd($formulaire->getData()); // Récupère les datas du formulaire sous forme de tableau associatif
+            $entityManager->persist($formulaire);
+            $entityManager->flush();
+            //dd($formulaire->getData()); // Récupère les datas du formulaire sous forme de tableau associatif
         }
 
         return $this->render('public/contact.html.twig', [
             'controller_name' => 'Who am I?',
             'frmContact' => $formulaire->createView()
-        ]);
+
+        ]);*/
+        $contactFormulaire = $this->createForm(ContactFormType::class);
+        return $this->render('public/contact.html.twig',[
+            'controller_name' => 'Formulaire de contact qui marche',
+            'frmContact' => $contactFormulaire->createView()]);
+
     }
 }
