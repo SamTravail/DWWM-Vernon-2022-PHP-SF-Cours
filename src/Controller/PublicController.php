@@ -29,26 +29,25 @@ class PublicController extends AbstractController
     }
 
     #[Route('/contact', name: 'contact')]
-    public function contact(Request $request, EntityManagerInterface $entityManager): Response
+    public function contact(Request $request, EntityManagerInterface $entityManager)
     {
         $messages = new Messages();
-        
-        $contactFormulaire = $this->createForm(MessagesType::class, $messages);
+
+        $messageFormulaire = $this->createForm(MessagesType::class, $messages);
         // dd($contactFormulaire);
-        $contactFormulaire->handleRequest($request);
+        $messageFormulaire->handleRequest($request);
 
         // dd($contactFormulaire);
 
-        if ($contactFormulaire->isSubmitted() && $contactFormulaire->isValid()) {
-            $entityManager->persist($contactFormulaire);
-            $entityManager->flush($contactFormulaire);
-
+        if ($messageFormulaire->isSubmitted() && $messageFormulaire->isValid()) {
+            $entityManager->persist($messages);
+            $entityManager->flush();
             return new Response('Ayé enfin');
         }
 
         return $this->render('public/contact.html.twig', [
             'controller_name' => 'Formulaire de contact qui marche',
-            'frmContact' => $contactFormulaire->createView()
+            'frmContact' => $messageFormulaire->createView()
         ]);
     }
 }
