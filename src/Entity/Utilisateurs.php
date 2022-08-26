@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Role;
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\Mapping as ORM;
 
