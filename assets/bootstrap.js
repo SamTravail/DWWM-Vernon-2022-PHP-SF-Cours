@@ -1,5 +1,7 @@
 import 'jquery';
 import 'bootstrap';
+import 'chart.js';
+
 
 import { startStimulusApp } from '@symfony/stimulus-bridge';
 
